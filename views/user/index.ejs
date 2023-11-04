@@ -738,10 +738,10 @@
               <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                 <div class="product product-11 text-center">
                   <figure class="product-media">
-                    <a href="/products/<%=product.productCode%>">
-                      <img src="<%=product.images[0]%>" alt="Product image"
+                    <a href="/products/<%=categories[0].slug%>/<%=product.productCode%>">
+                      <img src="<%=product.images.at(0)%>" alt="Product image"
                         class="product-image">
-                      <img src="<%=product.images[1]%>" alt="Product image"
+                      <img src="<%=product.images.at(-1)%>" alt="Product image"
                         class="product-image-hover">
                     </a>
 
@@ -752,12 +752,12 @@
 
                   <div class="product-body">
                     <div class="product-cat">
-                      <a href="#"><%=categories[0].title%></a>
+                      <a href="/products/<%=categories[0].slug%>"><%=categories[0].title%></a>
                     </div><!-- End .product-cat -->
                     <h3 class="product-title"><a href="/products/<%=product.productCode%>"><%=product.title%></a></h3>
                     <!-- End .product-title -->
                     <div class="product-price">
-                      <%=product.prices[0]%>
+                      <%=product.prices.at(0)%> - <%=product.prices.at(-1)%>
                     </div><!-- End .product-price -->
                   </div><!-- End .product-body -->
                   <div class="product-action">
@@ -770,18 +770,18 @@
           </div><!-- End .products -->
         </div><!-- .End .tab-pane -->
         <%for (let i=1; i < categories.length; i++) {%>
-          <%console.log(categories[i].slug)%>
         <div class="tab-pane p-0 fade" id="href_<%=categories[i].slug%>" role="tabpanel" aria-labelledby="<%=categories[i].slug%>">
           <div class="products">
             <div class="row justify-content-center">
+              <%categories[i].products.forEach((product)=>{ %>
               <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
                 <div class="product product-11 text-center">
                   <figure class="product-media">
                     <span class="product-label label-circle label-sale">Sale</span>
-                    <a href="product.html">
-                      <img src="/public/user/assets/images/demos/demo-2/products/product-9-1.jpg" alt="Product image"
+                    <a href="/products/<%=categories[i].slug%>/<%=product.productCode%>">
+                      <img src="<%=product.images.at(0)%>" alt="Product image"
                         class="product-image">
-                      <img src="/public/user/assets/images/demos/demo-2/products/product-9-2.jpg" alt="Product image"
+                      <img src="<%=product.images.at(-1)%>" alt="Product image"
                         class="product-image-hover">
                     </a>
 
@@ -792,12 +792,11 @@
 
                   <div class="product-body">
                     <div class="product-cat">
-                      <a href="#">Furniture</a>
+                      <a href="/products/<%=categories[i].slug%>"><%=categories[i].title%></a>
                     </div><!-- End .product-cat -->
-                    <h3 class="product-title"><a href="product.html">Garden Armchair</a></h3><!-- End .product-title -->
+                    <h3 class="product-title"><a href="/products/<%=categories[i].slug%>/<%=product.productCode%>"><%=product.title%></a></h3><!-- End .product-title -->
                     <div class="product-price">
-                      <span class="new-price">$94,00</span>
-                      <span class="old-price">Was $94,00</span>
+                      <span class="new-price"><%=product.prices.at(0)%> - <%=product.prices.at(-1)%></span>
                     </div><!-- End .product-price -->
                   </div><!-- End .product-body -->
                   <div class="product-action">
@@ -805,67 +804,7 @@
                   </div><!-- End .product-action -->
                 </div><!-- End .product -->
               </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-              <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                <div class="product product-11 text-center">
-                  <figure class="product-media">
-                    <span class="product-label label-circle label-new">New</span>
-                    <a href="product.html">
-                      <img src="/public/user/assets/images/demos/demo-2/products/product-12-1.jpg" alt="Product image"
-                        class="product-image">
-                      <img src="/public/user/assets/images/demos/demo-2/products/product-12-2.jpg" alt="Product image"
-                        class="product-image-hover">
-                    </a>
-
-                    <div class="product-action-vertical">
-                      <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                    </div><!-- End .product-action-vertical -->
-                  </figure><!-- End .product-media -->
-
-                  <div class="product-body">
-                    <div class="product-cat">
-                      <a href="#">Furniture</a>
-                    </div><!-- End .product-cat -->
-                    <h3 class="product-title"><a href="product.html">2-Seater</a></h3><!-- End .product-title -->
-                    <div class="product-price">
-                      $3.107,00
-                    </div><!-- End .product-price -->
-                  </div><!-- End .product-body -->
-                  <div class="product-action">
-                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                  </div><!-- End .product-action -->
-                </div><!-- End .product -->
-              </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
-
-              <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
-                <div class="product product-11 text-center">
-                  <figure class="product-media">
-                    <a href="product.html">
-                      <img src="/public/user/assets/images/demos/demo-2/products/product-13-1.jpg" alt="Product image"
-                        class="product-image">
-                      <img src="/public/user/assets/images/demos/demo-2/products/product-13-2.jpg" alt="Product image"
-                        class="product-image-hover">
-                    </a>
-
-                    <div class="product-action-vertical">
-                      <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
-                    </div><!-- End .product-action-vertical -->
-                  </figure><!-- End .product-media -->
-
-                  <div class="product-body">
-                    <div class="product-cat">
-                      <a href="#">Furniture</a>
-                    </div><!-- End .product-cat -->
-                    <h3 class="product-title"><a href="product.html">Wingback Chair</a></h3><!-- End .product-title -->
-                    <div class="product-price">
-                      $2.486,00
-                    </div><!-- End .product-price -->
-                  </div><!-- End .product-body -->
-                  <div class="product-action">
-                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                  </div><!-- End .product-action -->
-                </div><!-- End .product -->
-              </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+              <%})%>
             </div><!-- End .row -->
           </div><!-- End .products -->
         </div><!-- .End .tab-pane -->
