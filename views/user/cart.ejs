@@ -2,13 +2,13 @@
     <main class="main">
         <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
             <div class="container">
-                <h1 class="page-title">Shopping Cart<span>Shop</span></h1>
+                <h1 class="page-title">Giỏ hàng<span>Shop</span></h1>
             </div><!-- End .container -->
         </div><!-- End .page-header -->
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <div class="container">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Shop</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
                 </ol>
@@ -23,67 +23,74 @@
                             <table class="table table-cart table-mobile">
                                 <thead>
                                     <tr>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Kích thước</th>
+                                        <th>Đơn giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng tiền</th>
                                         <th></th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <tr>
-                                        <td class="product-col">
-                                            <div class="product">
-                                                <figure class="product-media">
-                                                    <a href="#">
-                                                        <img src="assets/images/products/table/product-1.jpg"
-                                                            alt="Product image">
-                                                    </a>
-                                                </figure>
+                                    <%cartItemsArray.forEach((cart)=>{%>
+                                        <tr>
+                                            <td class="product-col">
+                                                <div class="product">
+                                                    <figure class="product-media">
+                                                        <a href="#">
+                                                            <img src="<%=cart.item.images.at(0)%>"
+                                                                alt="Product image">
+                                                        </a>
+                                                    </figure>
 
-                                                <h3 class="product-title">
-                                                    <a href="#">Beige knitted elastic runner shoes</a>
-                                                </h3><!-- End .product-title -->
-                                            </div><!-- End .product -->
-                                        </td>
-                                        <td class="price-col">$84.00</td>
-                                        <td class="quantity-col">
-                                            <div class="cart-product-quantity">
-                                                <input type="number" class="form-control" value="1" min="1" max="10"
-                                                    step="1" data-decimals="0" required>
-                                            </div><!-- End .cart-product-quantity -->
-                                        </td>
-                                        <td class="total-col">$84.00</td>
-                                        <td class="remove-col"><button class="btn-remove"><i
-                                                    class="icon-close"></i></button></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-col">
-                                            <div class="product">
-                                                <figure class="product-media">
-                                                    <a href="#">
-                                                        <img src="assets/images/products/table/product-2.jpg"
-                                                            alt="Product image">
-                                                    </a>
-                                                </figure>
+                                                    <h3 class="product-title">
+                                                        <a href="/products/<%=cart.item.category.slug%>/<%cart.item.productCode%>"><%=cart.item.title%></a>
+                                                    </h3><!-- End .product-title -->
+                                                </div><!-- End .product -->
+                                            </td>
+                                            <td class="product-col">
+                                                <%=cart.sizePrice.size%>
+                                            </td>
+                                            <td class="price-col"><%=cart.sizePrice.price%></td>
+                                            <td class="quantity-col">
+                                                <!-- <div class="cart-product-quantity">
+                                                    <input type="number" class="form-control" value="1" min="1" max="10"
+                                                        step="1" data-decimals="0" required>
+                                                </div>End .cart-product-quantity -->
+                                                <%=cart.qty%>
+                                            </td>
+                                            <td class="total-col"><%=cart.price%></td>
+                                            <td class="remove-col"><button class="btn-remove"><i
+                                                        class="icon-close"></i></button></td>
+                                        </tr>
+                                        <%})%>
+                                        <tr>
+                                            <td class="product-col">
+                                                <div class="product">
+                                                    <figure class="product-media">
+                                                        <a href="#">
+                                                            <img src="assets/images/products/table/product-2.jpg"
+                                                                alt="Product image">
+                                                        </a>
+                                                    </figure>
 
-                                                <h3 class="product-title">
-                                                    <a href="#">Blue utility pinafore denim dress</a>
-                                                </h3><!-- End .product-title -->
-                                            </div><!-- End .product -->
-                                        </td>
-                                        <td class="price-col">$76.00</td>
-                                        <td class="quantity-col">
-                                            <div class="cart-product-quantity">
-                                                <input type="number" class="form-control" value="1" min="1" max="10"
-                                                    step="1" data-decimals="0" required>
-                                            </div><!-- End .cart-product-quantity -->
-                                        </td>
-                                        <td class="total-col">$76.00</td>
-                                        <td class="remove-col"><button class="btn-remove"><i
-                                                    class="icon-close"></i></button></td>
-                                    </tr>
+                                                    <h3 class="product-title">
+                                                        <a href="#">Blue utility pinafore denim dress</a>
+                                                    </h3><!-- End .product-title -->
+                                                </div><!-- End .product -->
+                                            </td>
+                                            <td class="price-col">$76.00</td>
+                                            <td class="quantity-col">
+                                                <div class="cart-product-quantity">
+                                                    <input type="number" class="form-control" value="1" min="1" max="10"
+                                                        step="1" data-decimals="0" required>
+                                                </div><!-- End .cart-product-quantity -->
+                                            </td>
+                                            <td class="total-col">$76.00</td>
+                                            <td class="remove-col"><button class="btn-remove"><i
+                                                        class="icon-close"></i></button></td>
+                                        </tr>
                                 </tbody>
                             </table><!-- End .table table-wishlist -->
 

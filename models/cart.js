@@ -1,20 +1,22 @@
-module.exports = function Cart(oldCart) {
-  this.items = oldCart.items || {};
-  this.totalQty = oldCart.totalQty || 0;
-  this.totalPrice = oldCart.totalPrice || 0;
+class Cart {
+  constructor(oldCart) {
+    this.items = oldCart.items || {};
+    this.totalQty = oldCart.totalQty || 0;
+    this.totalPrice = oldCart.totalPrice || 0;
+  }
 
-  this.add = function (item, id) {
-    let storedItem = this.items[id];
+  add(item, sizePrice, qty) {
+    let storedItem = this.items[sizePrice._id];
     if (!storedItem) {
-      storedItem = this.items[id] = { item: item, qty: 0, price: 0 };
+      storedItem = this.items[sizePrice._id] = { item, sizePrice, qty: 0, price: 0 };
     }
-    storedItem.qty++;
-    storedItem.price = storedItem.item.price * storedItem.qty;
-    this.totalQty++;
-    this.totalPrice += storedItem.item.price;
-  };
+    storedItem.qty += qty;
+    storedItem.price = storedItem.sizePrice.price * storedItem.qty;
+    this.totalQty += qty;
+    this.totalPrice += storedItem.sizePrice.price * qty;
+  }
 
-  this.reduceByOne = function (id) {
+  reduceByOne(id) {
     this.items[id].qty--;
     this.items[id].price -= this.items[id].item.price;
     this.totalQty--;
@@ -23,19 +25,21 @@ module.exports = function Cart(oldCart) {
     if (this.items[id].qty <= 0) {
       delete this.items[id];
     }
-  };
+  }
 
-  this.removeItem = function (id) {
+  removeItem(id) {
     this.totalQty -= this.items[id].qty;
     this.totalPrice -= this.items[id].price;
     delete this.items[id];
-  };
+  }
 
-  this.generateArray = function () {
+  generateArray() {
     const arr = [];
-    for (let id in this.items) {
-      arr.push(this.items[id]);
+    for (let itemId in this.items) {
+      arr.push(this.items[itemId]);
     }
     return arr;
-  };
-};
+  }
+}
+
+module.exports = Cart;

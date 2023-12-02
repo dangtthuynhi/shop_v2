@@ -19,15 +19,13 @@ router.get("/", async (req, res) => {
 
     const count = await Product.countDocuments();
 
-    console.log(products);
-
     res.render("user/product", {
       pageName: "Sản phẩm",
       products,
       categories,
       current: page,
       breadcrumbs: null,
-      home: "/product/?",
+      home: "/products/?",
       pages: Math.ceil(count / perPage),
     });
   } catch (error) {
@@ -40,6 +38,7 @@ router.get("/", async (req, res) => {
 router.get("/search", async (req, res) => {
   const perPage = 9;
   const page = parseInt(req.query.page) || 1;
+  console.log(req.query.search);
 
   try {
     const products = await Product.find({
@@ -63,7 +62,7 @@ router.get("/search", async (req, res) => {
       categories,
       current: page,
       breadcrumbs: null,
-      home: `/product/search?search=${req.query.search}&`,
+      home: `/products/search?search=${req.query.search}&`,
       pages: Math.ceil(count / perPage),
     });
   } catch (error) {
@@ -97,7 +96,7 @@ router.get("/:slug", async (req, res) => {
       categories,
       current: page,
       breadcrumbs: req.breadcrumbs,
-      home: `/product/${req.params.slug.toString()}/?`,
+      home: `/products/${req.params.slug.toString()}/?`,
       pages: Math.ceil(count / perPage),
     });
   } catch (error) {
@@ -110,20 +109,24 @@ router.get("/:slug", async (req, res) => {
 router.get("/:slug/:productCode", async (req, res) => {
   try {
     const product = await Product.findOne({ productCode: req.params.productCode }).populate("category");
-    
+
+    const categories = await Category.find({});
+
     const foundCategory = await Category.findOne({ slug: req.params.slug });
-    
-    const relatedProducts = await Product.find({ category: foundCategory.id })
+
+    const relatedProducts = await Product.find({ category: foundCategory._id })
       .sort("-createdAt")
       .limit(6)
       .populate("category");
-    
-      res.render("user/product-detail", {
+
+      console.log(relatedProducts);
+
+    res.render("user/product-detail", {
       pageName: product.title,
       product,
+      categories,
       relatedProducts,
-      home: `/product/${req.params.slug.toString()}/${product.slug}/?`,
-      moment,
+      home: `/products/${req.params.slug.toString()}/${product.productCode}/?`,
     });
   } catch (error) {
     console.log(error);

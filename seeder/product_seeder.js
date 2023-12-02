@@ -17,16 +17,15 @@ for (let i = 0; i < 4; i++) {
     category.save()
         .then(categoryRef => {
             console.log(`${categoryRef.title} saved successfully`);
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 15; i++) {
                 const product = new Product({
                     category: category._id,
                     productCode: faker.number.int(),
                     title: faker.commerce.productName(),
-                    images: [faker.image.url(),faker.image.url()],
-                    sizes: [faker.number.int(),faker.number.int()],
+                    images: [faker.image.url(), faker.image.url(), faker.image.url()],
+                    sizePrices: [{ size: faker.number.int(), price: faker.commerce.price()}, { size: faker.number.int(), price: faker.commerce.price()}, { size: faker.number.int(), price: faker.commerce.price()}],
                     description: faker.commerce.productDescription(),
-                    prices: [faker.commerce.price(),faker.commerce.price()],
-                    available: true,
+                    available: false,
                 })
 
                 product.save()

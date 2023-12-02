@@ -13,8 +13,12 @@ router.get("/", async (req, res) => {
         },
       },
     ]);
-    console.log(categories);
-    res.render("user/index", { pageName: "Trang chủ", categories });
+    const products = await Product.find({})
+      .sort({ createdAt: -1 }) // Sorting in descending order by "createdAt"
+      .limit(12)
+      .populate("category");
+    // console.log(categories);
+    res.render("user/index", { pageName: "Trang chủ", categories, products });
   } catch (error) {
     console.log(error);
     res.redirect("/");
