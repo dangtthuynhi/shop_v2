@@ -1,19 +1,27 @@
 class Cart {
   constructor(oldCart) {
-    this.items = oldCart.items || {};
-    this.totalQty = oldCart.totalQty || 0;
-    this.totalPrice = oldCart.totalPrice || 0;
+    this.items = oldCart ? oldCart.items || {} : {};
+    this.totalQty = oldCart ? oldCart.totalQty || 0 : 0;
+    this.totalPrice = oldCart ? oldCart.totalPrice || 0 : 0;
   }
 
   add(item, sizePrice, qty) {
-    let storedItem = this.items[sizePrice._id];
-    if (!storedItem) {
-      storedItem = this.items[sizePrice._id] = { item, sizePrice, qty: 0, price: 0 };
+    const sizePriceId = sizePrice._id;
+    
+    if (!this.items[sizePriceId]) {
+      this.items[sizePriceId] = {
+        item,
+        sizePrice,
+        qty,
+        price: sizePrice.price * qty,
+      };
+    } else {
+      this.items[sizePriceId].qty += qty;
+      this.items[sizePriceId].price = this.items[sizePriceId].sizePrice.price * this.items[sizePriceId].qty;
     }
-    storedItem.qty += qty;
-    storedItem.price = storedItem.sizePrice.price * storedItem.qty;
+
     this.totalQty += qty;
-    this.totalPrice += storedItem.sizePrice.price * qty;
+    this.totalPrice += sizePrice.price * qty;
   }
 
   reduceByOne(id) {
@@ -39,6 +47,28 @@ class Cart {
       arr.push(this.items[itemId]);
     }
     return arr;
+  }
+
+  updateCart(updates) {
+    updates.forEach(update => {
+      const { itemId, sizePriceId, qty } = update;
+      const storedItem = this.items[sizePriceId];
+
+      if (storedItem) {
+        this.totalQty -= storedItem.qty;
+        this.totalPrice -= storedItem.price;
+
+        storedItem.qty = qty;
+        storedItem.price = storedItem.sizePrice.price * qty;
+
+        this.totalQty += qty;
+        this.totalPrice += storedItem.price;
+
+        if (qty <= 0) {
+          delete this.items[sizePriceId];
+        }
+      }
+    });
   }
 }
 

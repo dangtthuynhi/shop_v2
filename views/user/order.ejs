@@ -1,0 +1,158 @@
+<% include header.ejs %>
+    <main class="main">
+        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+            <div class="container">
+                <h1 class="page-title"><%=pageName%><span>Shop</span></h1>
+            </div><!-- End .container -->
+        </div><!-- End .page-header -->
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="/products">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><%=pageName%></li>
+                </ol>
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+
+        <div class="page-content">
+            <div class="checkout">
+                <div class="container">
+                    <form action="#">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <h2 class="checkout-title">Thông tin đơn hàng</h2><!-- End .checkout-title -->
+                                <label>Họ tên *</label>
+                                <input type="text" class="form-control" required>
+
+                                <label>Điện thoại di động *</label>
+                                <input type="text" class="form-control" required>
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <select class="form-control form-select form-select-sm mb-3" id="city"
+                                            aria-label=".form-select-sm">
+                                            <option value="" selected>Chọn tỉnh thành</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control form-select form-select-sm mb-3" id="district"
+                                            aria-label=".form-select-sm">
+                                            <option value="" selected>Chọn quận huyện</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control form-select form-select-sm" id="ward"
+                                            aria-label=".form-select-sm">
+                                            <option value="" selected>Chọn phường xã</option>
+                                        </select>
+                                    </div>
+                                </div><!-- End .row -->
+
+                                <label>Địa chỉ *</label>
+                                <input type="text" class="form-control" required>
+
+                                <label>Email *</label>
+                                <input type="email" class="form-control" required>
+
+                                <label>Ghi chú</label>
+                                <textarea class="form-control" cols="30" rows="4"></textarea>
+                            </div><!-- End .col-lg-9 -->
+                            <aside class="col-lg-3">
+                                <div class="summary">
+                                    <h3 class="summary-title">Đơn hàng</h3><!-- End .summary-title -->
+
+                                    <table class="table table-summary">
+                                        <thead>
+                                            <tr>
+                                                <th>Sản phẩm</th>
+                                                <th>Tổng tiền</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <%cartItemsArray.forEach((cart)=>{%>
+                                                <tr>
+                                                    <td><a
+                                                            href="/products/<%=cart.item.category.slug%>/<%cart.item.productCode%>">
+                                                            <%=cart.item.title%>
+                                                        </a></td>
+                                                    <td>
+                                                        <%=cart.price%>
+                                                    </td>
+                                                </tr>
+                                                <%})%>
+                                                    <tr class="summary-total">
+                                                        <td>Tổng tiền:</td>
+                                                        <td>
+                                                            <%=totalPrice%>
+                                                        </td>
+                                                    </tr><!-- End .summary-total -->
+                                        </tbody>
+                                    </table><!-- End .table table-summary -->
+
+                                    <div class="accordion-summary" id="accordion-payment">
+                                        <div class="card">
+                                            <div class="card-header" id="heading-1">
+                                                <h2 class="card-title">
+                                                    <a role="button" data-toggle="collapse" href="#collapse-1"
+                                                        aria-expanded="true" aria-controls="collapse-1">
+                                                        Chuyển khoản ngân hàng
+                                                    </a>
+                                                </h2>
+                                            </div><!-- End .card-header -->
+                                            <div id="collapse-1" class="collapse show" aria-labelledby="heading-1"
+                                                data-parent="#accordion-payment">
+                                                <div class="card-body">
+                                                </div><!-- End .card-body -->
+                                            </div><!-- End .collapse -->
+                                        </div><!-- End .card -->
+
+                                        <div class="card">
+                                            <div class="card-header" id="heading-2">
+                                                <h2 class="card-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                                        href="#collapse-2" aria-expanded="false"
+                                                        aria-controls="collapse-2">
+                                                        QR Code
+                                                    </a>
+                                                </h2>
+                                            </div><!-- End .card-header -->
+                                            <div id="collapse-2" class="collapse" aria-labelledby="heading-2"
+                                                data-parent="#accordion-payment">
+                                                <div class="card-body">
+                                                </div><!-- End .card-body -->
+                                            </div><!-- End .collapse -->
+                                        </div><!-- End .card -->
+
+                                        <div class="card">
+                                            <div class="card-header" id="heading-3">
+                                                <h2 class="card-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                                        href="#collapse-3" aria-expanded="false"
+                                                        aria-controls="collapse-3">
+                                                        Thanh toán khi nhận hàng
+                                                    </a>
+                                                </h2>
+                                            </div><!-- End .card-header -->
+                                            <div id="collapse-3" class="collapse" aria-labelledby="heading-3"
+                                                data-parent="#accordion-payment">
+                                                <div class="card-body">
+                                                </div><!-- End .card-body -->
+                                            </div><!-- End .collapse -->
+                                        </div><!-- End .card -->
+                                    </div><!-- End .accordion -->
+
+                                    <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                        <span class="btn-text">Đặt hàng</span>
+                                        <span class="btn-hover-text">Tiến hành đặt hàng</span>
+                                    </button>
+                                </div><!-- End .summary -->
+                            </aside><!-- End .col-lg-3 -->
+                        </div><!-- End .row -->
+                    </form>
+                </div><!-- End .container -->
+            </div><!-- End .checkout -->
+        </div><!-- End .page-content -->
+    </main><!-- End .main -->
+    <% include footer.ejs %>

@@ -38,59 +38,40 @@
                                             <td class="product-col">
                                                 <div class="product">
                                                     <figure class="product-media">
-                                                        <a href="#">
-                                                            <img src="<%=cart.item.images.at(0)%>"
-                                                                alt="Product image">
+                                                        <a href="/products/<%=cart.item.category.slug%>/<%=cart.item.productCode%>">
+                                                            <img src="<%=cart.item.images.at(0)%>" alt="Product image">
                                                         </a>
                                                     </figure>
 
                                                     <h3 class="product-title">
-                                                        <a href="/products/<%=cart.item.category.slug%>/<%cart.item.productCode%>"><%=cart.item.title%></a>
+                                                        <a href="/products/<%=cart.item.category.slug%>/<%=cart.item.productCode%>">
+                                                            <%=cart.item.title%>
+                                                        </a>
                                                     </h3><!-- End .product-title -->
                                                 </div><!-- End .product -->
                                             </td>
                                             <td class="product-col">
                                                 <%=cart.sizePrice.size%>
                                             </td>
-                                            <td class="price-col"><%=cart.sizePrice.price%></td>
-                                            <td class="quantity-col">
-                                                <!-- <div class="cart-product-quantity">
-                                                    <input type="number" class="form-control" value="1" min="1" max="10"
-                                                        step="1" data-decimals="0" required>
-                                                </div>End .cart-product-quantity -->
-                                                <%=cart.qty%>
+                                            <td class="price-col">
+                                                <%=cart.sizePrice.price%>
                                             </td>
-                                            <td class="total-col"><%=cart.price%></td>
-                                            <td class="remove-col"><button class="btn-remove"><i
-                                                        class="icon-close"></i></button></td>
-                                        </tr>
-                                        <%})%>
-                                        <tr>
-                                            <td class="product-col">
-                                                <div class="product">
-                                                    <figure class="product-media">
-                                                        <a href="#">
-                                                            <img src="assets/images/products/table/product-2.jpg"
-                                                                alt="Product image">
-                                                        </a>
-                                                    </figure>
-
-                                                    <h3 class="product-title">
-                                                        <a href="#">Blue utility pinafore denim dress</a>
-                                                    </h3><!-- End .product-title -->
-                                                </div><!-- End .product -->
-                                            </td>
-                                            <td class="price-col">$76.00</td>
                                             <td class="quantity-col">
                                                 <div class="cart-product-quantity">
-                                                    <input type="number" class="form-control" value="1" min="1" max="10"
-                                                        step="1" data-decimals="0" required>
-                                                </div><!-- End .cart-product-quantity -->
+                                                    <input type="number" class="form-control" value="<%=cart.qty%>"
+                                                        min="1" max="100" step="1" data-decimals="0"
+                                                        data-item-id="<%=cart.item._id%>"
+                                                        data-sizeprice-id="<%=cart.sizePrice._id%>" required>
+                                                </div>
+                                                <!-- <%=cart.qty%> -->
                                             </td>
-                                            <td class="total-col">$76.00</td>
-                                            <td class="remove-col"><button class="btn-remove"><i
-                                                        class="icon-close"></i></button></td>
+                                            <td class="total-col">
+                                                <%=cart.price%>
+                                            </td>
+                                            <!-- <td class="remove-col"><button class="btn-remove"><i
+                                                        class="icon-close"></i></button></td> -->
                                         </tr>
+                                        <%})%>
                                 </tbody>
                             </table><!-- End .table table-wishlist -->
 
@@ -107,8 +88,8 @@
                                     </form>
                                 </div><!-- End .cart-discount -->
 
-                                <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i
-                                        class="icon-refresh"></i></a>
+                                <a href="#" class="btn btn-outline-dark-2" id="updateCartBtn"><span>CẬP NHẬT GIỎ
+                                        HÀNG</span><i class="icon-refresh"></i></a>
                             </div><!-- End .cart-bottom -->
                         </div><!-- End .col-lg-9 -->
                         <aside class="col-lg-3">
@@ -118,8 +99,10 @@
                                 <table class="table table-summary">
                                     <tbody>
                                         <tr class="summary-subtotal">
-                                            <td>Subtotal:</td>
-                                            <td>$160.00</td>
+                                            <td>Tổng tiền:</td>
+                                            <td>
+                                                <%=totalPrice%>
+                                            </td>
                                         </tr><!-- End .summary-subtotal -->
                                         <tr class="summary-shipping">
                                             <td>Shipping:</td>
@@ -175,12 +158,10 @@
                                     </tbody>
                                 </table><!-- End .table table-summary -->
 
-                                <a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO
-                                    CHECKOUT</a>
+                                <a href="/checkout" class="btn btn-outline-primary-2 btn-order btn-block">MUA HÀNG</a>
                             </div><!-- End .summary -->
 
-                            <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
-                                    SHOPPING</span><i class="icon-refresh"></i></a>
+                            <!-- <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>TIẾP TỤC</span><i class="icon-refresh"></i></a> -->
                         </aside><!-- End .col-lg-3 -->
                     </div><!-- End .row -->
                 </div><!-- End .container -->

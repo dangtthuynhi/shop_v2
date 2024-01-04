@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Product = require("../../models/product");
 const Category = require("../../models/category");
+const Cart = require('../../models/cart');
 
 // GET: display all products
 router.get("/", async (req, res) => {
@@ -19,12 +20,19 @@ router.get("/", async (req, res) => {
 
     const count = await Product.countDocuments();
 
+    // Create a new Cart instance based on the session's cart
+    const cart = new Cart(req.session.cart);
+    const cartItemsArray = cart.generateArray();
+
     res.render("user/product", {
       pageName: "Sản phẩm",
       products,
       categories,
       current: page,
       breadcrumbs: null,
+      totalPrice: cart.totalPrice,
+      totalQty: cart.totalQty,
+      cartItemsArray,
       home: "/products/?",
       pages: Math.ceil(count / perPage),
     });
@@ -56,12 +64,18 @@ router.get("/search", async (req, res) => {
 
     const categories = await Category.find({});
 
+    const cart = new Cart(req.session.cart);
+    const cartItemsArray = cart.generateArray();
+
     res.render("user/product", {
       pageName: "Tìm kiếm",
       products,
       categories,
       current: page,
       breadcrumbs: null,
+      totalPrice: cart.totalPrice,
+      totalQty: cart.totalQty,
+      cartItemsArray,
       home: `/products/search?search=${req.query.search}&`,
       pages: Math.ceil(count / perPage),
     });
@@ -89,12 +103,18 @@ router.get("/:slug", async (req, res) => {
 
     const categories = await Category.find({});
 
+    const cart = new Cart(req.session.cart);
+    const cartItemsArray = cart.generateArray();
+
     res.render("user/product", {
       pageName: foundCategory.title,
       currentCategory: foundCategory,
       products: allProducts,
       categories,
       current: page,
+      totalPrice: cart.totalPrice,
+      totalQty: cart.totalQty,
+      cartItemsArray,
       breadcrumbs: req.breadcrumbs,
       home: `/products/${req.params.slug.toString()}/?`,
       pages: Math.ceil(count / perPage),
@@ -119,13 +139,17 @@ router.get("/:slug/:productCode", async (req, res) => {
       .limit(6)
       .populate("category");
 
-      console.log(relatedProducts);
+    const cart = new Cart(req.session.cart);
+    const cartItemsArray = cart.generateArray();
 
     res.render("user/product-detail", {
       pageName: product.title,
       product,
       categories,
       relatedProducts,
+      totalPrice: cart.totalPrice,
+      totalQty: cart.totalQty,
+      cartItemsArray,
       home: `/products/${req.params.slug.toString()}/${product.productCode}/?`,
     });
   } catch (error) {

@@ -80,10 +80,44 @@
                                 aria-haspopup="true" aria-expanded="false" data-display="static">
                                 <div class="icon">
                                     <i class="icon-shopping-cart"></i>
-                                    <span class="cart-count">2</span>
+                                    <span class="cart-count"><%=totalQty%></span>
                                 </div>
                                 <p>Giỏ hàng</p>
                             </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-cart-products">
+                                    <%cartItemsArray.forEach((cart)=>{%>
+                                    <div class="product">
+                                        <div class="product-cart-details">
+                                            <h4 class="product-title">
+                                                <a href="/products/<%=cart.item.category.slug%>/<%=cart.item.productCode%>"><%=cart.item.title%></a>
+                                            </h4>
+                                            <span class="cart-product-info">
+                                                <span class="cart-product-qty"><%=cart.qty%></span>
+                                                x <%=cart.price%>
+                                            </span>
+                                        </div><!-- End .product-cart-details -->
+
+                                        <figure class="product-image-container">
+                                            <a href="/products/<%=cart.item.category.slug%>/<%=cart.item.productCode%>" class="product-image">
+                                                <img src="<%=cart.item.images.at(0)%>" alt="product">
+                                            </a>
+                                        </figure>
+                                    </div><!-- End .product -->
+                                    <%})%>
+                                </div><!-- End .cart-product -->
+
+                                <div class="dropdown-cart-total">
+                                    <span>Tổng tiền</span>
+
+                                    <span class="cart-total-price"><%=totalPrice%></span>
+                                </div><!-- End .dropdown-cart-total -->
+
+                                <div class="dropdown-cart-action">
+                                    <a href="/cart" class="btn btn-primary">Xem giỏ hàng</a>
+                                    <!-- <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a> -->
+                                </div><!-- End .dropdown-cart-total -->
+                            </div>
                         </div><!-- End .cart-dropdown -->
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->

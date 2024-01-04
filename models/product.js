@@ -29,6 +29,7 @@ const productSchema = Schema({
   sizePrices: {
     type: [sizePriceSchema],
     required: true,
+    unique: true,
   },
   description: {
     type: String,

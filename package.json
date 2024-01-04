@@ -18,6 +18,8 @@
     "faker": "^6.6.6",
     "http-errors": "~1.6.3",
     "mongoose": "^7.5.3",
+    "mongoose-auto-increment": "^5.0.1",
+    "mongoose-plugin-autoinc": "^1.1.9",
     "mongoose-slug-updater": "^3.3.0",
     "moongose": "^1.0.0",
     "morgan": "~1.9.1",

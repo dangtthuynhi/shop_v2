@@ -1,25 +1,45 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-var autoIncrement = require('mongoose-auto-increment');
+const { autoIncrement } = require('mongoose-plugin-autoinc');
+
+const orderItemSchema = new Schema({
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product',
+    required: true,
+  },
+  size: {
+    type: String,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+});
+
 const orderSchema = Schema({
-  cart: {
-    type: Object,
-    required: true,
-  },
-  name: {
+  orderNumber: {
     type: String,
     required: true,
+    unique: true
   },
-  phoneNumber: {
-    type: String,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
-  address: {
-    type: String,
+  items: {
+    type: [orderItemSchema],
     required: true,
   },
-  email: {
-    type: String,
+  totalPrice: {
+    type: Number,
+    required: true,
   },
   note: {
     type: String,
@@ -40,9 +60,15 @@ const orderSchema = Schema({
   },
 });
 
-autoIncrement.initialize(mongoose.connection);
-
-orderSchema.plugin(autoIncrement.plugin, 'Order');
+orderSchema.plugin(autoIncrement, {
+  model: 'Order',
+  field: 'orderNumber',
+  startAt: 1,  
+  incrementBy: 1,  
+  prefix: 'DH',  
+  unique: true, 
+  format: 'DH%04d'  // Định dạng số đặt hàng với %04d để đảm bảo luôn có 4 chữ số
+});
 
 module.exports = mongoose.model("Order", orderSchema);
 
