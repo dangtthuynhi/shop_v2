@@ -3,8 +3,6 @@ var router = express.Router();
 const Product = require("../../models/product");
 const Category = require("../../models/category");
 const Cart = require('../../models/cart');
-const Order = require('../../models/order');
-const User = require('../../models/user');
 
 router.get("/", async (req, res) => {
   try {
@@ -61,51 +59,6 @@ router.get('/checkout', async function (req, res) {
     console.error("Error rendering cart page:", err);
     return res.redirect('/');
   }
-});
-
-
-// Route để xử lý đơn hàng
-router.post('/create-order', async (req, res) => {
-  // Lấy dữ liệu từ req.body
-  const { fullName, phoneNumber, address, email, note, paymentMethod } = req.body;
-  const cart = new Cart(req.session.cart);
-  const cartItemsArray = cart.generateArray();
-  const totalPrice = cart.totalPrice;
-  const totalQty = cart.totalQty;
-
-
-  const newUser = new User({
-    name: fullName,
-    phoneNumber: phoneNumber,
-    address: address,
-    email: email,
-  });
-
-  const savedUser = await newUser.save();
-
-  // Kiểm tra dữ liệu (có thể thêm điều kiện kiểm tra khác tùy thuộc vào yêu cầu của bạn)
-
-  // Tạo đối tượng Order
-  const order = new Order({
-      user: savedUser,
-      items: cartItemsArray,
-      totalPrice,
-      note,
-      paymentMethod,
-      // Thêm các trường khác tùy thuộc vào yêu cầu của bạn
-  });
-
-  // Lưu đơn hàng vào cơ sở dữ liệu
-  order.save()
-      .then(savedOrder => {
-          // Xử lý khi đơn hàng đã được lưu thành công
-          res.json({ success: true, order: savedOrder });
-      })
-      .catch(error => {
-          // Xử lý khi có lỗi xảy ra
-          console.error('Error saving order:', error);
-          res.json({ success: false, error: 'Error saving order' });
-      });
 });
 
 module.exports = router;

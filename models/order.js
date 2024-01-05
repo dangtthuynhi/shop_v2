@@ -16,7 +16,11 @@ const orderItemSchema = new Schema({
     type: Number,
     required: true,
   },
-  price: {
+  unitPrice: {
+    type: Number,
+    required: true,
+  },
+  totalPrice: {
     type: Number,
     required: true,
   },
@@ -37,7 +41,7 @@ const orderSchema = Schema({
     type: [orderItemSchema],
     required: true,
   },
-  totalPrice: {
+  totalOrderPrice: {
     type: Number,
     required: true,
   },

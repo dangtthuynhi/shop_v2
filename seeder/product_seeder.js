@@ -25,7 +25,7 @@ for (let i = 0; i < 4; i++) {
                     images: [faker.image.url(), faker.image.url(), faker.image.url()],
                     sizePrices: [{ size: faker.number.int(), price: faker.commerce.price()}, { size: faker.number.int(), price: faker.commerce.price()}, { size: faker.number.int(), price: faker.commerce.price()}],
                     description: faker.commerce.productDescription(),
-                    available: false,
+                    available: true,
                 })
 
                 product.save()

@@ -1,0 +1,96 @@
+<% include header.ejs %>
+    <main class="main">
+        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+            <div class="container">
+                <h1 class="page-title">
+                    <%=pageName%><span>Shop</span>
+                </h1>
+            </div><!-- End .container -->
+        </div><!-- End .page-header -->
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="/products">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <%=pageName%>
+                    </li>
+                </ol>
+            </div><!-- End .container -->
+        </nav><!-- End .breadcrumb-nav -->
+
+        <div class="page-content">
+            <div class="checkout">
+                <div class="container">
+                    <form action="/create-order" method="POST">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h2 class="checkout-title">Đặt hàng thành công</h2><!-- End .checkout-title -->
+                                <label>Họ tên *</label>
+                                <input type="text" class="form-control" name="fullName" placeholder="<%=order.user.name%>" readonly>
+
+                                <label>Điện thoại di động *</label>
+                                <input type="tel" class="form-control" name="phoneNumber" placeholder="<%=order.user.phoneNumber%>"
+                                    pattern="[0-9]{10}" readonly>
+
+                                <label>Địa chỉ *</label>
+                                <input type="text" class="form-control" name="address" placeholder="<%=order.user.address%>" readonly>
+
+                                <label>Email *</label>
+                                <input type="email" class="form-control" name="email" placeholder="<%=order.user.email%>" readonly>
+
+                                <!-- <label>Phương thức thanh toán *</label>
+                                <input type="email" class="form-control" name="email" placeholder="<%=order.user.address%>" readonly> -->
+
+                                <label>Ghi chú</label>
+                                <textarea class="form-control" cols="30" rows="4" name="note" placeholder="<%=order.note%>" readonly></textarea>
+                            </div><!-- End .col-lg-9 -->
+                            <aside class="col-lg-6">
+                                <div class="summary">
+                                    <h3 class="summary-title">Đơn hàng</h3><!-- End .summary-title -->
+
+                                    <table class="table table-summary">
+                                        <thead>
+                                            <tr>
+                                                <th>Sản phẩm</th>
+                                                <th>Đơn Giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Thành tiền</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <%order.items.forEach((item)=>{%>
+                                                <tr>
+                                                    <td><a
+                                                            href="/products/<%=item.product.category.slug%>/<%=item.product.productCode%>">
+                                                            <%=item.product.title%>
+                                                        </a></td>
+                                                    <td>
+                                                        <%=item.unitPrice%>
+                                                    </td>
+                                                    <td>
+                                                        <%=item.quantity%>
+                                                    </td>
+                                                    <td>
+                                                        <%=item.totalPrice%>
+                                                    </td>
+                                                </tr>
+                                                <%})%>
+                                                    <tr class="summary-total">
+                                                        <td>Tổng tiền:</td>
+                                                        <td>
+                                                            <%=order.totalOrderPrice%>
+                                                        </td>
+                                                    </tr><!-- End .summary-total -->
+                                        </tbody>
+                                    </table><!-- End .table table-summary -->
+                                </div><!-- End .summary -->
+                            </aside><!-- End .col-lg-3 -->
+                        </div><!-- End .row -->
+                    </form>
+                </div><!-- End .container -->
+            </div><!-- End .checkout -->
+        </div><!-- End .page-content -->
+    </main><!-- End .main -->
+    <% include footer.ejs %>

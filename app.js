@@ -15,6 +15,7 @@ var usersRouter = require('./routes/user/users');
 var productsRouter = require("./routes/user/products");
 var adminRouter = require('./routes/admin/index');
 var cartRouter = require('./routes/user/cart');
+var orderRouter = require('./routes/user/order');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 
@@ -53,6 +54,7 @@ app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/admin', adminRouter);
 app.use('/cart', cartRouter);
+app.use('/order', orderRouter);
 
 app.use(flash());
 app.use(passport.initialize());

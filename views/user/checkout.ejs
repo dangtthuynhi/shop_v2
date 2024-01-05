@@ -22,7 +22,7 @@
         <div class="page-content">
             <div class="checkout">
                 <div class="container">
-                    <form action="/payment" method="POST">
+                    <form action="/order/create-order" method="POST">
                         <div class="row">
                             <div class="col-lg-9">
                                 <h2 class="checkout-title">Thông tin giao hàng</h2><!-- End .checkout-title -->
@@ -30,7 +30,7 @@
                                 <input type="text" class="form-control" name="fullName" required>
 
                                 <label>Điện thoại di động *</label>
-                                <input type="tel" class="form-control" name="phone" placeholder="0123456789"
+                                <input type="tel" class="form-control" name="phoneNumber" placeholder="0123456789"
                                     pattern="[0-9]{10}" required>
 
                                 <div class="row">
@@ -99,14 +99,14 @@
                                     <div class="filter-items">
                                         <div class="filter-item">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" checked id="transfer" name="paymentMethod">
+                                                <input type="radio" class="custom-control-input" checked id="transfer" name="paymentMethod" value="transfer">
                                                 <label class="custom-control-label" for="transfer">QR Code</label>
                                             </div><!-- End .custom-checkbox -->
                                         </div><!-- End .filter-item -->
 
                                         <div class="filter-item">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="cod" name="paymentMethod">
+                                                <input type="radio" class="custom-control-input" id="cod" name="paymentMethod" value="cod">
                                                 <label class="custom-control-label" for="cod">Thanh toán khi nhận hàng</label>
                                             </div><!-- End .custom-checkbox -->
                                         </div><!-- End .filter-item -->
