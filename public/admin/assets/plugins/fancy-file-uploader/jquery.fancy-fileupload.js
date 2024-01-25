@@ -757,7 +757,7 @@
 	}
 
 	$.fn.FancyFileUpload.defaults = {
-		'url' : '',
+		'url' : '/admin/fileuploader',
 		'params' : {},
 		'edit' : true,
 		'maxfilesize' : -1,

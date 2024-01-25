@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { autoIncrement } = require('mongoose-plugin-autoinc');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const orderItemSchema = new Schema({
   product: {
@@ -29,7 +29,6 @@ const orderItemSchema = new Schema({
 const orderSchema = Schema({
   orderNumber: {
     type: String,
-    required: true,
     unique: true
   },
   user: {
@@ -64,14 +63,20 @@ const orderSchema = Schema({
   },
 });
 
-orderSchema.plugin(autoIncrement, {
-  model: 'Order',
-  field: 'orderNumber',
-  startAt: 1,  
-  incrementBy: 1,  
-  prefix: 'DH',  
-  unique: true, 
-  format: 'DH%04d'  // Định dạng số đặt hàng với %04d để đảm bảo luôn có 4 chữ số
+// Pre-save hook to handle auto-incrementing and formatting
+orderSchema.pre('save', async function (next) {
+  try {
+    const Order = mongoose.model("Order"); // Reference the Order model here
+    if (!this.orderNumber) {
+      const lastOrder = await Order.findOne({}, {}, { sort: { 'createdAt': -1 } });
+      const lastOrderNumber = lastOrder ? parseInt(lastOrder.orderNumber.slice(2), 10) : 0;
+      const nextOrderNumber = lastOrderNumber + 1;
+      this.orderNumber = `DH${String(nextOrderNumber).padStart(4, '0')}`;
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = mongoose.model("Order", orderSchema);

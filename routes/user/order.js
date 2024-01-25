@@ -64,7 +64,7 @@ router.post('/create-order', async (req, res) => {
                 const body = {
                     orderCode: Number(String(Date.now()).slice(-6)),
                     amount: savedOrder.totalOrderPrice,
-                    description: `Thanh toan don hang ${savedOrder.orderNumber}`,
+                    description: `Thanh toan ${savedOrder.orderNumber}`,
                     returnUrl: `${process.env.YOUR_DOMAIN}/order/get-order/${savedOrder.orderNumber}`,
                     cancelUrl: `${process.env.YOUR_DOMAIN}/checkout`
                 };
