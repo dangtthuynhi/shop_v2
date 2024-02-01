@@ -49,6 +49,7 @@ const orderSchema = Schema({
   },
   paymentMethod: {
     type: String,
+    get: convertPaymentMethod,
     required: true,
   },
   paymentStatus: {
@@ -62,6 +63,16 @@ const orderSchema = Schema({
     default: new Date(),
   },
 });
+
+
+function convertPaymentMethod(paymentMethod) {
+  var result = 'Thanh toán khi nhận hàng';
+  if (paymentMethod == 'transfer') {
+    result = 'Chuyển khoản';
+  }
+  return result;
+}
+
 
 // Pre-save hook to handle auto-incrementing and formatting
 orderSchema.pre('save', async function (next) {
