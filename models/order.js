@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+const moment = require('moment-timezone');
 
 const orderItemSchema = new Schema({
   product: {
@@ -60,17 +60,25 @@ const orderSchema = Schema({
   },
   createdAt: {
     type: Date,
+    get: convertToVNTimestamp,
     default: new Date(),
   },
 });
 
 
 function convertPaymentMethod(paymentMethod) {
-  var result = 'Thanh toán khi nhận hàng';
+  var result = 'COD';
   if (paymentMethod == 'transfer') {
     result = 'Chuyển khoản';
   }
   return result;
+}
+
+function convertToVNTimestamp(utcTimestamp) {
+  // Chuyển đổi thời gian từ UTC sang múi giờ Việt Nam
+  const vnTime = moment.utc(utcTimestamp).tz('Asia/Ho_Chi_Minh');
+  // Định dạng thời gian theo định dạng mong muốn (ví dụ: DD/MM/YYYY HH:mm:ss)
+  return vnTime.format("DD/MM/YYYY HH:mm:ss");
 }
 
 

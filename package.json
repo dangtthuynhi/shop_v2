@@ -19,6 +19,7 @@
     "express-session": "^1.17.3",
     "faker": "^6.6.6",
     "http-errors": "~1.6.3",
+    "moment-timezone": "^0.5.45",
     "mongoose": "^7.5.3",
     "mongoose-auto-increment": "^5.0.1",
     "mongoose-plugin-autoinc": "^1.1.9",
